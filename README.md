@@ -6,38 +6,41 @@
 
 ## Purpose
 
-This container is available to Github Action because there is some situations ( mostly testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) ) where you can not run Puppeteer in headless mode.
+This container is available to Github Action to allow testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) ) which is not possible in a headless Puppeteer configuration.
 
 ## Usage
 
-This installs Puppeteer ontop of a [NodeJS](https://nodejs.org) container so you have access to run [npm](https://www.npmjs.com) scripts using args. For this hook we hyjack the entrypoint of the [Dockerfile](https://docs.docker.com/engine/reference/builder/) so we can startup [Xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) before your testing starts.
+This installs Puppeteer ontop of a [NodeJS](https://nodejs.org) container so you have access to run [npm](https://www.npmjs.com) scripts using args. For this hook we hijack the entrypoint of the [Dockerfile](https://docs.docker.com/engine/reference/builder/) so we can startup [Xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) before your testing starts.
 
 ```yaml
-name: CI
+name: Puppeteer Headful CI
 on: push
 jobs:
-  installDependencies:
-    name: Install Dependencies
+  end_to_end_tests:
+    name: Run Headful End-to-End Tests 
     runs-on: ubuntu-latest
+    env:
+      CI: 'true'
     steps:
-    - uses: actions/checkout@master
-    - name: Install Dependencies
-      uses: actions/npm@master
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Install node 
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: 12.x
+    - name: Install stuff 
+      run: npm install 
       env:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-      with:
-        args: install
-    - name: Test Code
-      uses: mujo-code/puppeteer-headful@master
-      env:
-        CI: 'true'
+    - name: Run headful puppeteer tests
+      uses: djp3/puppeteer-headful@master
       with:
         args: npm test
 ```
 
 > Note: You will need to let Puppeteer know not to download Chromium. By setting the env of your install task to PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = 'true' so it does not install conflicting versions of Chromium.
 
-Then you will need to change the way you launch Puppeteer. We export out a nifty ENV variable `PUPPETEER_EXEC_PATH` that you set at your `executablePath`. This should be undefined locally so it should function perfectly fine locally and on the action.
+Then you will need to change the way you launch Puppeteer. The code exports an ENV variable `PUPPETEER_EXEC_PATH` that you set at your `executablePath`. This should be undefined locally so it should function perfectly fine locally and on the action.
 
 ```javascript
 browser = await puppeteer.launch({

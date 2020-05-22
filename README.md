@@ -6,7 +6,15 @@
 
 ## Purpose
 
-This container is available to Github Action to allow testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) which is not possible in a headless Puppeteer configuration.
+	browser = await puppeteer.launch({
+		executablePath: process.env.PUPPETEER_EXEC_PATH, 	// set by docker container in github CI environment
+		headless: false, 									// extension are allowed only in headful mode
+		args: [
+			`--no-sandbox`,									//Required for this to work in github CI environment 
+			`--disable-extensions-except=${extensionPath}`,
+			`--load-extension=${extensionPath}`
+		]
+	});This container is available to Github Action to allow testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) which is not possible in a headless Puppeteer configuration.
 
 ## Usage
 
@@ -42,10 +50,17 @@ jobs:
 
 Then you will need to change the way you launch Puppeteer. The code exports an ENV variable `PUPPETEER_EXEC_PATH` that you set at your `executablePath`. This should be undefined locally so it should function perfectly fine locally and on the action.
 
+Below is the minimal bit needed to get a chromium instance launched with the extension for testing.  More complete example at: [Witness Chrome Extension](https://github.com/djp3/witness_chrome_extension)
+
 ```javascript
-browser = await puppeteer.launch({
-  executablePath: process.env.PUPPETEER_EXEC_PATH, // set by docker container
-  headless: false,
-  ...
-});
+	browser = await puppeteer.launch({
+		executablePath: process.env.PUPPETEER_EXEC_PATH, 	// set by docker container in github CI environment
+		headless: false, 									// extension are allowed only in headful mode
+		args: [
+			`--no-sandbox`,									//Required for this to work in github CI environment 
+			`--disable-extensions-except=${extensionPath}`,
+			`--load-extension=${extensionPath}`
+		]
+        ...
+	});
 ```

@@ -5,20 +5,11 @@
 > Versioning of this container is based on the version of NodeJS in the container
 
 ## Purpose
-
-	browser = await puppeteer.launch({
-		executablePath: process.env.PUPPETEER_EXEC_PATH, 	// set by docker container in github CI environment
-		headless: false, 									// extension are allowed only in headful mode
-		args: [
-			`--no-sandbox`,									//Required for this to work in github CI environment 
-			`--disable-extensions-except=${extensionPath}`,
-			`--load-extension=${extensionPath}`
-		]
-	});This container is available to Github Action to allow testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) which is not possible in a headless Puppeteer configuration.
+This container is available as a Github Action to allow [Chrome Extension](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) testing which is not possible in a headless Puppeteer configuration.
 
 ## Usage
 
-This installs Puppeteer ontop of a [NodeJS](https://nodejs.org) container so you have access to run [npm](https://www.npmjs.com) scripts using args. For this hook we hijack the entrypoint of the [Dockerfile](https://docs.docker.com/engine/reference/builder/) so we can startup [Xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) before your testing starts.
+This installs Puppeteer on top of a [NodeJS](https://nodejs.org) container so you have access to run [npm](https://www.npmjs.com) scripts using args. For this hook we hijack the entrypoint of the [Dockerfile](https://docs.docker.com/engine/reference/builder/) so we can startup [Xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) before your testing starts.
 
 ```yaml
 name: Puppeteer Headful CI

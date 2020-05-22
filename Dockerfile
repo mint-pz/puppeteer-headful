@@ -5,11 +5,12 @@ LABEL "com.github.actions.description"="A GitHub Action / Docker image for Puppe
 LABEL "com.github.actions.icon"="layout"
 LABEL "com.github.actions.color"="blue"
 
-LABEL "repository"="https://github.com/mujo-code/puppeteer-headful"
-LABEL "homepage"="https://github.com/mujo-code/puppeteer-headful"
-LABEL "maintainer"="Jacob Lowe"
+LABEL "repository"="https://github.com/djp3/puppeteer-headful"
+LABEL "homepage"="https://github.com/djp3/puppeteer-headful"
+LABEL "maintainer"="Donald Patterson"
 
 RUN  apt-get update \
+     && apt-get install -yq chromium-browser \
      # See https://crbug.com/795759
      && apt-get install -yq libgconf-2-4 \
      # Install latest chrome dev package, which installs the necessary libs to

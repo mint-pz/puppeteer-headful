@@ -10,7 +10,7 @@ LABEL "homepage"="https://github.com/djp3/puppeteer-headful"
 LABEL "maintainer"="Donald Patterson"
 
 RUN  apt-get update \
-     && apt-get install -yq chromium-browser \
+     && apt-get install -yq chromium \
      # See https://crbug.com/795759
      && apt-get install -yq libgconf-2-4 \
      # Install latest chrome dev package, which installs the necessary libs to

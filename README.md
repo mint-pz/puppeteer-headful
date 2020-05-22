@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This container is available to Github Action to allow testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) ) which is not possible in a headless Puppeteer configuration.
+This container is available to Github Action to allow testing [Chrome Extensions](https://pptr.dev/#?product=Puppeteer&version=v1.18.1&show=api-working-with-chrome-extensions) which is not possible in a headless Puppeteer configuration.
 
 ## Usage
 

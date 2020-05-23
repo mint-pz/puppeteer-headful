@@ -1,6 +1,6 @@
-# Puppeteer Headful
+# Puppeteer Headful for Chrome Extension Testing
 
-[Github Action](https://github.com/features/actions) for [Puppeteer](https://github.com/GoogleChrome/puppeteer) that can be ran "headful" or not headless.
+[Github Action](https://github.com/features/actions) for [Puppeteer](https://github.com/GoogleChrome/puppeteer) that can be ran "headful", or not headless, on a Chromium instance.
 
 > Versioning of this container is based on the version of NodeJS in the container
 

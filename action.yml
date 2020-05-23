@@ -1,0 +1,9 @@
+name: 'Puppeteer Headful for Chrome Extension Testing'
+author: 'Donald Patterson, d_j_p_3@djp3.net'
+description: 'A GitHub Action / Docker image for testing Chrome extensions using Puppeteer and Node on a Headful instance of Chromium'
+branding:
+  icon: 'thumbs-up'  
+  color: 'white'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

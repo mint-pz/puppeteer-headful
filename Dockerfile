@@ -1,4 +1,4 @@
-FROM node:12.10.0
+FROM node:14.3.0
 
 LABEL "repository"="https://github.com/djp3/puppeteer-headful"
 
